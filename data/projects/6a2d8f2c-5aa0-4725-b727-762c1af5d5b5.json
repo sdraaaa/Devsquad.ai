@@ -1,0 +1,63 @@
+{
+  "projectId": "6a2d8f2c-5aa0-4725-b727-762c1af5d5b5",
+  "name": "Project 6a2d8f2c",
+  "description": "Create a React + Firebase chat app with login and admin dashboard",
+  "createdAt": "2025-06-02T05:30:35.919667",
+  "updatedAt": "2025-06-02T05:30:36.125410",
+  "files": {},
+  "versions": [
+    {
+      "id": "v0-2025-06-02T05-30-35.919667",
+      "timestamp": "2025-06-02T05:30:35.930399",
+      "description": "Project initialized"
+    },
+    {
+      "id": "emma-2025-06-02T05-30-35.971829",
+      "timestamp": "2025-06-02T05:30:36.008065",
+      "description": "Emma completed work on 1 files"
+    },
+    {
+      "id": "bob-2025-06-02T05-30-36.067401",
+      "timestamp": "2025-06-02T05:30:36.079589",
+      "description": "Bob completed work on 1 files"
+    },
+    {
+      "id": "restore-v0-2025-06-02T05-30-35.919667-2025-06-02T05-30-36.125351",
+      "timestamp": "2025-06-02T05:30:36.125387",
+      "description": "Restored from version v0-2025-06-02T05-30-35.919667"
+    }
+  ],
+  "currentAgentIndex": 2,
+  "agentStatuses": [
+    {
+      "name": "emma",
+      "role": "Product Manager",
+      "status": "completed",
+      "completedAt": "2025-06-02T05:30:35.971829"
+    },
+    {
+      "name": "bob",
+      "role": "Architect",
+      "status": "completed",
+      "completedAt": "2025-06-02T05:30:36.067401"
+    },
+    {
+      "name": "alex",
+      "role": "Engineer",
+      "status": "pending",
+      "completedAt": null
+    },
+    {
+      "name": "david",
+      "role": "Data Analyst",
+      "status": "pending",
+      "completedAt": null
+    },
+    {
+      "name": "mike",
+      "role": "Team Leader",
+      "status": "pending",
+      "completedAt": null
+    }
+  ]
+}

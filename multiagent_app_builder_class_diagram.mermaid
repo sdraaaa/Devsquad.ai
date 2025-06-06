@@ -1,0 +1,209 @@
+classDiagram
+    class Project {
+        +string id
+        +string name
+        +string description
+        +Date createdAt
+        +Date updatedAt
+        +object files
+        +array versions
+        +int currentAgentIndex
+        +array agentStatuses
+        +createProject(description) Project
+        +getProject(id) Project
+        +updateProject(id, data) Project
+        +createVersion() void
+        +restoreVersion(versionId) void
+    }
+
+    class FileSystem {
+        +object fileTree
+        +createFile(projectId, path, content, agent) void
+        +getFile(projectId, path) object
+        +updateFile(projectId, path, content, agent) void
+        +deleteFile(projectId, path) void
+        +listFiles(projectId) array
+        +exportFileTree(projectId) object
+        +importFileTree(projectId, fileTree) void
+    }
+
+    class VersionManager {
+        +createSnapshot(projectId, description) string
+        +getVersions(projectId) array
+        +getVersion(projectId, versionId) object
+        +restoreVersion(projectId, versionId) void
+    }
+
+    class AgentManager {
+        +object currentAgentStatus
+        +runAgent(projectId, agentName, context) Promise
+        +getAgentStatus(projectId) array
+        +startNextAgent(projectId) void
+        +formatAgentPrompt(agentName, context) string
+        +parseAgentResponse(response) object
+    }
+
+    class AIService {
+        +callOpenAI(prompt) Promise
+        +validateResponse(response) boolean
+        +extractFiles(response) array
+        +extractRemarks(response) string
+    }
+
+    class WebSocketManager {
+        +initializeServer(httpServer) void
+        +handleConnection(socket) void
+        +subscribeToProject(socket, projectId) void
+        +broadcastFileCreated(projectId, fileData) void
+        +broadcastFileUpdated(projectId, fileData) void
+        +broadcastAgentStarted(projectId, agentData) void
+        +broadcastAgentCompleted(projectId, agentData) void
+        +broadcastVersionCreated(projectId, versionData) void
+        +broadcastConsoleLog(projectId, logData) void
+    }
+
+    class ProjectController {
+        -Project projectModel
+        +startProject(req, res) Promise
+        +getProject(req, res) Promise
+    }
+
+    class FileController {
+        -FileSystem fileSystem
+        +getFiles(req, res) Promise
+        +getFile(req, res) Promise
+        +createOrUpdateFile(req, res) Promise
+    }
+
+    class VersionController {
+        -VersionManager versionManager
+        +getVersions(req, res) Promise
+        +restoreVersion(req, res) Promise
+    }
+
+    class AgentController {
+        -AgentManager agentManager
+        +runAgent(req, res) Promise
+    }
+
+    class App {
+        +Express expressApp
+        +Server httpServer
+        +initializeApp() void
+        +setupRoutes() void
+        +setupMiddleware() void
+        +setupErrorHandling() void
+        +startServer() void
+    }
+
+    class StorageService {
+        +readJson(filePath) Promise
+        +writeJson(filePath, data) Promise
+        +fileExists(filePath) boolean
+        +createDirectory(dirPath) void
+        +getProjectPath(projectId) string
+    }
+
+    %% Frontend Classes
+    class AppComponent {
+        +render() JSX
+    }
+
+    class ProjectContext {
+        +Project currentProject
+        +array openFiles
+        +string activeFilePath
+        +setProject(project) void
+        +openFile(path) void
+        +closeFile(path) void
+        +setActiveFile(path) void
+        +updateFileContent(path, content) void
+    }
+
+    class WebSocketContext {
+        +WebSocket socket
+        +boolean connected
+        +connectToProject(projectId) void
+        +disconnectFromProject() void
+        +handleSocketEvents() void
+    }
+
+    class TeamBarComponent {
+        +array agents
+        +string activeAgent
+        +render() JSX
+    }
+
+    class FileExplorerComponent {
+        +object fileTree
+        +string selectedPath
+        +handleFileClick(path) void
+        +renderTree(node) JSX
+        +render() JSX
+    }
+
+    class CodeEditorComponent {
+        +string content
+        +string language
+        +handleChange(newContent) void
+        +saveFile() void
+        +render() JSX
+    }
+
+    class ConsoleComponent {
+        +array logs
+        +addLog(message, type) void
+        +clearLogs() void
+        +render() JSX
+    }
+
+    class VersionModalComponent {
+        +array versions
+        +boolean isOpen
+        +loadVersions() void
+        +handleRestore(versionId) void
+        +toggleModal() void
+        +render() JSX
+    }
+
+    class ApiService {
+        +startProject(prompt) Promise
+        +getProject(projectId) Promise
+        +runAgent(projectId, agentName) Promise
+        +getFiles(projectId) Promise
+        +getFile(projectId, path) Promise
+        +saveFile(projectId, path, content, agent) Promise
+        +getVersions(projectId) Promise
+        +restoreVersion(projectId, versionId) Promise
+    }
+
+    %% Relationships
+    ProjectController --> Project
+    FileController --> FileSystem
+    VersionController --> VersionManager
+    AgentController --> AgentManager
+    AgentManager --> AIService
+    VersionManager --> FileSystem
+    VersionManager --> StorageService
+    Project --> StorageService
+    FileSystem --> StorageService
+    App --> ProjectController
+    App --> FileController
+    App --> VersionController
+    App --> AgentController
+    App --> WebSocketManager
+
+    AppComponent --> ProjectContext
+    AppComponent --> WebSocketContext
+    AppComponent --> TeamBarComponent
+    AppComponent --> FileExplorerComponent
+    AppComponent --> CodeEditorComponent
+    AppComponent --> ConsoleComponent
+    AppComponent --> VersionModalComponent
+    ProjectContext --> ApiService
+    WebSocketContext --> ApiService
+    TeamBarComponent --> ProjectContext
+    FileExplorerComponent --> ProjectContext
+    CodeEditorComponent --> ProjectContext
+    ConsoleComponent --> ProjectContext
+    VersionModalComponent --> ApiService

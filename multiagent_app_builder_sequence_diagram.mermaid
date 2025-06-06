@@ -1,0 +1,119 @@
+sequenceDiagram
+    participant User
+    participant UI as Frontend UI
+    participant API as Backend API
+    participant WS as WebSocket Server
+    participant AM as AgentManager
+    participant AI as AIService
+    participant PM as Project Model
+    participant FS as FileSystem
+    participant VM as VersionManager
+    
+    %% Project Initialization
+    User->>UI: Input project description & click Start
+    UI->>API: POST /api/start {userPrompt}
+    API->>PM: createProject(description)
+    PM->>FS: initializeFileTree(projectId)
+    PM-->>API: Return projectId
+    API-->>UI: Return {projectId}
+    UI->>WS: joinProject(projectId)
+    WS-->>UI: Acknowledge connection
+    
+    %% Emma (PM) Agent Workflow
+    API->>AM: runAgent(projectId, "emma", context)
+    AM->>AI: callOpenAI(emmaPrompt)
+    AI-->>AM: Return response JSON
+    AM->>FS: createFile(projectId, "docs/PRD.md", content, "emma")
+    WS->>UI: broadcastFileCreated event
+    AM->>PM: updateAgentStatus(projectId, "emma", "completed")
+    AM->>VM: createSnapshot(projectId, "Emma completed PRD")
+    WS->>UI: broadcastVersionCreated event
+    WS->>UI: broadcastAgentCompleted event
+    UI->>UI: Update UI (highlight Bob)
+    WS->>UI: broadcastConsoleLog event
+    
+    %% Bob (Architect) Agent Workflow
+    AM->>AI: callOpenAI(bobPrompt)
+    AI-->>AM: Return response JSON
+    AM->>FS: createFile(projectId, "docs/Architecture.md", content, "bob")
+    WS->>UI: broadcastFileCreated event
+    AM->>PM: updateAgentStatus(projectId, "bob", "completed")
+    AM->>VM: createSnapshot(projectId, "Bob completed Architecture")
+    WS->>UI: broadcastVersionCreated event
+    WS->>UI: broadcastAgentCompleted event
+    UI->>UI: Update UI (highlight Alex)
+    WS->>UI: broadcastConsoleLog event
+    
+    %% Alex (Engineer) Agent Workflow
+    AM->>AI: callOpenAI(alexPrompt)
+    AI-->>AM: Return response JSON
+    loop For each file in Alex's output
+        AM->>FS: createFile(projectId, filePath, content, "alex")
+        WS->>UI: broadcastFileCreated event
+    end
+    AM->>PM: updateAgentStatus(projectId, "alex", "completed")
+    AM->>VM: createSnapshot(projectId, "Alex completed skeleton code")
+    WS->>UI: broadcastVersionCreated event
+    WS->>UI: broadcastAgentCompleted event
+    UI->>UI: Update UI (highlight David)
+    WS->>UI: broadcastConsoleLog event
+    
+    %% David (Data Analyst) Agent Workflow
+    AM->>AI: callOpenAI(davidPrompt)
+    AI-->>AM: Return response JSON
+    loop For each file in David's output
+        AM->>FS: createFile(projectId, filePath, content, "david")
+        WS->>UI: broadcastFileCreated event
+    end
+    AM->>PM: updateAgentStatus(projectId, "david", "completed")
+    AM->>VM: createSnapshot(projectId, "David completed data model")
+    WS->>UI: broadcastVersionCreated event
+    WS->>UI: broadcastAgentCompleted event
+    UI->>UI: Update UI (highlight Mike)
+    WS->>UI: broadcastConsoleLog event
+    
+    %% Mike (Team Leader) Agent Workflow
+    AM->>AI: callOpenAI(mikePrompt)
+    AI-->>AM: Return response JSON
+    loop For each file in Mike's output
+        AM->>FS: createFile(projectId, filePath, content, "mike")
+        WS->>UI: broadcastFileCreated event
+    end
+    AM->>PM: updateAgentStatus(projectId, "mike", "completed")
+    AM->>VM: createSnapshot(projectId, "Mike completed README and review")
+    WS->>UI: broadcastVersionCreated event
+    WS->>UI: broadcastAgentCompleted event
+    UI->>UI: Update UI (all agents completed)
+    WS->>UI: broadcastConsoleLog event
+    
+    %% User interactions after project generation
+    User->>UI: Click on a file in explorer
+    UI->>API: GET /api/:projectId/file?path=...
+    API->>FS: getFile(projectId, path)
+    FS-->>API: Return file content
+    API-->>UI: Return file data
+    UI->>UI: Display file in editor
+    
+    User->>UI: Edit file content
+    UI->>API: POST /api/:projectId/file {path, content, agent:"User"}
+    API->>FS: updateFile(projectId, path, content, "User")
+    FS-->>API: Acknowledge update
+    API-->>UI: Acknowledge update
+    WS->>UI: broadcastFileUpdated event (to other clients)
+    
+    %% Version management
+    User->>UI: Click "Versions" button
+    UI->>API: GET /api/:projectId/versions
+    API->>VM: getVersions(projectId)
+    VM-->>API: Return versions list
+    API-->>UI: Return versions data
+    UI->>UI: Display versions modal
+    
+    User->>UI: Click "Restore" on a version
+    UI->>API: POST /api/:projectId/restore {versionId}
+    API->>VM: restoreVersion(projectId, versionId)
+    VM->>FS: importFileTree(projectId, versionFileTree)
+    VM-->>API: Acknowledge restore
+    API-->>UI: Acknowledge restore
+    WS->>UI: Multiple broadcastFileUpdated events
+    UI->>UI: Update file explorer
