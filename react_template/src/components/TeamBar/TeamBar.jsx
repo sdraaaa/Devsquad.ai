@@ -46,7 +46,7 @@ const TeamBar = () => {
     { id: 'bob', name: 'Bob', role: 'Architect' },
     { id: 'alex', name: 'Alex', role: 'Engineer' },
     { id: 'david', name: 'David', role: 'Data Analyst' },
-    { id: 'mike', name: 'Mike', role: 'Team Lead' }
+    { id: 'devops', name: 'DevOps', role: 'DevOps Engineer' }
   ];
 
   const handleAgentClick = (agentId) => {

@@ -6,14 +6,14 @@ This is the backend service for the AI-powered multi-agent website/app builder. 
 
 - RESTful API for project management, file operations, and version control
 - WebSocket-based real-time collaboration
-- OpenAI integration for AI agents
+- Together AI integration for AI agents
 - File-based storage system for projects and versions
-- Zero-cost implementation using free-tier services
+- Cost-effective implementation using Together AI
 
 ## Prerequisites
 
 - Node.js 16.x or later
-- OpenAI API key (free tier)
+- Together AI API key
 
 ## Installation
 
@@ -22,11 +22,11 @@ This is the backend service for the AI-powered multi-agent website/app builder. 
 
 
 
-3. Copy `.env.example` to `.env` and update with your OpenAI API key:
+3. Copy `.env.example` to `.env` and update with your Together AI API key:
 
 
 
-4. Edit the `.env` file and set your OpenAI API key.
+4. Edit the `.env` file and set your Together AI API key.
 
 ## Running the Server
 

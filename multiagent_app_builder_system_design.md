@@ -7,7 +7,7 @@ To create a zero-cost, AI-powered multi-agent website/app builder, we'll impleme
 
 2. **Backend**: Node.js with Express for API endpoints and Socket.IO for real-time communication. We'll use a file-based JSON store for maintaining project data without requiring paid databases.
 
-3. **Agent System**: We'll use OpenAI's free-tier GPT-3.5-turbo to power the multi-agent workflow (Emma → Bob → Alex → David → Mike), each with specific responsibilities within the project development pipeline.
+3. **Agent System**: We'll use Together AI's cost-effective models like Llama-2-70b-chat-hf to power the multi-agent workflow (Emma → Bob → Alex → David → DevOps Engineer), each with specific responsibilities for building complete, deployable websites.
 
 4. **Storage & Versioning**: A file-based JSON storage system will maintain the entire file tree and project versions as timestamped snapshots, allowing users to restore previous states.
 
@@ -69,7 +69,7 @@ Note: The detailed sequence diagrams are available in the separate file `multiag
 - **Framework**: Express 4.x
 - **Real-time Server**: Socket.IO 4.x
 - **File Storage**: lowdb 6.x or custom JSON file handling
-- **AI Integration**: OpenAI API (GPT-3.5-turbo)
+- **AI Integration**: Together AI API (Llama-2-70b-chat-hf)
 - **Authentication**: JWT (for potential future expansion)
 
 ## Folder Structure
@@ -331,7 +331,7 @@ Note: The detailed sequence diagrams are available in the separate file `multiag
 
 ## Security Considerations
 
-1. **API Key Protection**: Store the OpenAI API key as an environment variable
+1. **API Key Protection**: Store the Together AI API key as an environment variable
 2. **Input Validation**: Validate all user inputs, especially file paths
 3. **File Path Sanitization**: Prevent directory traversal attacks
 4. **Rate Limiting**: Implement rate limiting for API endpoints to prevent abuse

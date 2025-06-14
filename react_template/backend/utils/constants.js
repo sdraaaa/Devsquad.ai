@@ -29,11 +29,11 @@ exports.AGENT_ROLES = {
     description: 'Designs data models and security rules',
     systemPrompt: 'You are David, a Data Analyst. Design data models and security rules for the project.'
   },
-  mike: {
-    name: 'Mike',
-    role: 'Team Leader',
-    description: 'Reviews output and creates documentation',
-    systemPrompt: 'You are Mike, a Team Lead. Review the entire project and create documentation.'
+  devops: {
+    name: 'DevOps Engineer',
+    role: 'DevOps Engineer',
+    description: 'Handles deployment, build configuration, and environment setup',
+    systemPrompt: 'You are a DevOps Engineer. Set up build configuration, CI/CD pipelines, environment setup, and deployment infrastructure for the project.'
   }
 };
 

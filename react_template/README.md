@@ -4,13 +4,22 @@ This project implements a zero-cost, AI-powered multi-agent website/app builder 
 
 ## Overview
 
-The Multi-Agent App Builder leverages a team of specialized AI agents, each with distinct roles:
+The Multi-Agent App Builder leverages a team of specialized AI agents that collaborate to build complete, deployable websites:
 
-- **Emma (Product Manager)**: Creates PRDs with feature specifications and user stories
-- **Bob (Architect)**: Designs system architecture and technology stack
-- **Alex (Engineer)**: Implements code and core functionality
-- **David (Data Analyst)**: Designs data models and security rules
-- **Mike (Team Leader)**: Reviews output and creates documentation
+- **Emma (Product Manager)**: Creates comprehensive PRDs with feature specifications and user stories for any website type
+- **Bob (Software Architect)**: Designs system architecture and modern technology stack for web applications
+- **Alex (Software Engineer)**: Implements production-ready frontend and backend code with best practices
+- **David (Data Analyst)**: Designs data models, APIs, and database schemas for data-driven applications
+- **DevOps Engineer**: Handles build configuration, CI/CD pipelines, deployment setup, and environment management
+
+## Supported Website Types
+
+The system can generate complete, deployable websites including:
+- Personal Portfolios, Weather Apps, To-Do Lists, Landing Pages
+- E-Commerce Catalogs, Blog Websites, Calculator Apps, Quiz Applications
+- Music Players, Image Galleries, Clock/Timer Apps, Recipe Applications
+- Color Picker Tools, Typing Speed Tests, Login/Register Interfaces
+- And any other type of web application you can describe
 
 The system supports real-time collaboration through WebSockets and provides file editing, version control, and project management features.
 
@@ -50,7 +59,7 @@ The system supports real-time collaboration through WebSockets and provides file
 
 - Node.js 16.x or later
 - npm or pnpm
-- OpenAI API key (for backend AI agents)
+- Together AI API key (for backend AI agents)
 
 ### Frontend Setup
 
@@ -75,7 +84,7 @@ cd backend
 # Install backend dependencies
 pnpm install
 
-# Copy the example environment file and add your OpenAI API key
+# Copy the example environment file and add your Together AI API key
 cp .env.example .env
 
 # Start the backend server
